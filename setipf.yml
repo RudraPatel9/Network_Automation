@@ -1,0 +1,32 @@
+---
+- name: Configure IP addresses on port4 and port5 of FortiGate
+  hosts: firewalls
+  connection: httpapi
+  gather_facts: no
+
+  tasks:
+    - name: Set IP on port4
+      fortinet.fortios.fortios_system_interface:
+        vdom: "root"
+        state: present
+        system_interface:
+          name: "port4"
+          ip: "192.168.70.1 255.255.255.0"
+          allowaccess:
+            - ping
+            - http
+            - ssh
+          type: physical
+
+    - name: Set IP on port5
+      fortinet.fortios.fortios_system_interface:
+        vdom: "root"
+        state: present
+        system_interface:
+          name: "port5"
+          ip: "192.168.80.1 255.255.255.0"
+          allowaccess:
+            - ping
+            - http
+            - ssh
+          type: physical

@@ -1,0 +1,15 @@
+---
+- name: Test FortiGate connectivity
+  hosts: firewall1
+  gather_facts: no
+  tasks:
+    - name: Get system status
+      fortinet.fortios.fortios_system_status:
+        vdom: "root"
+        access_token: ""
+      register: result
+
+    - name: Show result
+      debug:
+        var: result
+

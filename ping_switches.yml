@@ -1,0 +1,9 @@
+---
+- name: Ping Cisco switches using Ansible
+  hosts: switches
+  gather_facts: no
+
+  tasks:
+    - name: Run command to verify SSH access
+      ios_command:
+        commands: show version

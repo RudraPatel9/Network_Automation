@@ -1,0 +1,8 @@
+- name: Ping router with show version
+  hosts: router
+  gather_facts: no
+  tasks:
+    - name: Run show version
+      ios_command:
+        commands:
+          - show version

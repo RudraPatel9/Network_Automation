@@ -1,0 +1,20 @@
+---
+- name: Configure ACL on Cisco Router to block VLAN 70 and 80
+  hosts: routers
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: Create extended ACL BLOCK-VLAN-70-80
+      ios_config:
+        lines:
+          - 10 deny ip 192.168.70.0 0.0.0.255 192.168.80.0 0.0.0.255
+          - 20 deny ip 192.168.80.0 0.0.0.255 192.168.70.0 0.0.0.255
+          - 30 permit ip any any
+        parents: ip access-list extended BLOCK-VLAN-70-80
+
+    - name: Apply ACL to interface GigabitEthernet0/1
+      ios_config:
+        lines:
+          - ip access-group BLOCK-VLAN-70-80 in
+        parents: interface FastEthernet1/0

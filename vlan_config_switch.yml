@@ -1,0 +1,33 @@
+---
+- name: Configure VLANs and assign ports on Cisco switches
+  hosts: switches
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: Create VLAN 50 with name Private
+      ios_config:
+        lines:
+          - name Private
+        parents: vlan 50
+
+    - name: Create VLAN 60 with name Public
+      ios_config:
+        lines:
+          - name Public
+        parents: vlan 60
+
+    - name: Assign Gi1/1 to VLAN 50 (Private)
+      ios_config:
+        lines:
+          - switchport mode access
+          - switchport access vlan 50
+        parents: interface GigabitEthernet1/1
+
+    - name: Assign Gi1/2 to VLAN 60 (public)
+      ios_config:
+        lines:
+          - switchport mode access
+          - switchport access vlan 60
+        parents: interface GigabitEthernet1/2
+

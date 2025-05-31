@@ -1,0 +1,14 @@
+---
+- name: Configure OSPF routing on Cisco Router for VLAN 30 and 40
+  hosts: routers
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: Enable OSPF and advertise VLAN 30 and 40 networks
+      ios_config:
+        lines:
+          - router-id 1.1.1.1
+          - network 192.168.30.0 0.0.0.255 area 0
+          - network 192.168.40.0 0.0.0.255 area 0
+        parents: router ospf 1
