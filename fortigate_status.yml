@@ -1,9 +1,0 @@
----
-- name: Check if firewall is working
-  hosts: all
-  gather_facts: no
-  tasks:
-    - name: Test SSH connectivity to firewall
-      ansible.builtin.ping:
-        data: "pong"
-      delegate_to: "{{ inventory_hostname }}"
